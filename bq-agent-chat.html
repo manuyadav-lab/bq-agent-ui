@@ -1,11 +1,13 @@
-<!DOCTYPE html>
-
+# Create a downloadable HTML file with the updated code
+html_content = """<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>AI Analytics ChatBot</title>
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       font-family: Arial, sans-serif;
       background: #0b1220;
@@ -13,92 +15,89 @@
       padding: 24px;
     }
 
-```
-.header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-.logo {
-  width: 38px; height: 38px;
-  background: #22c55e;
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: bold; color: black; font-size: 14px;
-}
-.title { font-size: 20px; font-weight: 600; }
-.subtitle { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
 
-.input-row {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-input {
-  flex: 1;
-  padding: 10px 14px;
-  border-radius: 6px;
-  border: 1px solid #374151;
-  background: #1f2937;
-  color: #fff;
-  font-size: 14px;
-}
-input:focus { outline: none; border-color: #22c55e; }
+    .logo {
+      width: 38px; height: 38px;
+      background: #22c55e;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: bold; color: black;
+    }
 
-button {
-  padding: 10px 18px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-}
-.primary { background: #22c55e; color: #000; }
+    .title { font-size: 20px; }
+    .subtitle { font-size: 12px; color: #9ca3af; }
 
-/* ✅ BUTTONS STYLE */
-.chips {
-  margin-bottom: 20px;
-}
-.chip {
-  background: #1f2937;
-  color: #d1d5db;
-  border: 1px solid #374151;
-  padding: 6px 12px;
-  font-size: 12px;
-  margin: 4px 6px 4px 0;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.chip:hover {
-  background: #374151;
-}
+    .input-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
 
-.result-area { display: flex; flex-direction: column; gap: 16px; }
+    input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #374151;
+      background: #1f2937;
+      color: #fff;
+    }
 
-.panel {
-  background: #111827;
-  border-radius: 8px;
-  border: 1px solid #1f2937;
-  overflow: hidden;
-}
-.panel-header {
-  background: #1f2937;
-  padding: 8px 14px;
-  font-size: 11px;
-  font-weight: 600;
-  color: #9ca3af;
-}
-.panel-body {
-  padding: 14px;
-  font-size: 13px;
-  white-space: pre-wrap;
-}
-.error-body { color: #f87171; }
+    button {
+      padding: 10px 16px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
 
-.loading { color: #6b7280; font-style: italic; padding: 14px; }
-```
+    .primary { background: #22c55e; color: black; }
 
+    .chips { margin-bottom: 20px; }
+
+    .chip {
+      background: #1f2937;
+      border: 1px solid #374151;
+      padding: 6px 10px;
+      margin: 4px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .chip:hover { background: #374151; }
+
+    .panel {
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 8px;
+      margin-top: 16px;
+    }
+
+    .panel-header {
+      background: #1f2937;
+      padding: 8px 14px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .panel-body {
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .error-body { color: #f87171; }
+
+    .loading {
+      color: #6b7280;
+      font-style: italic;
+      padding: 14px;
+    }
   </style>
 </head>
 
@@ -113,23 +112,21 @@ button {
   </div>
 
   <div class="input-row">
-    <input id="q" placeholder="Ask anything about your data..." onkeydown="if(event.key==='Enter') send()" />
+    <input id="q" placeholder="Ask anything..." onkeydown="if(event.key==='Enter') send()" />
     <button class="primary" id="sendBtn" onclick="send()">Send</button>
   </div>
 
-  <!-- ✅ QUICK QUERY BUTTONS -->
-
   <div class="chips">
     <button class="chip" onclick="quick('Top channels by spend last 7 days')">Top channels</button>
-    <button class="chip" onclick="quick('ROAS by channel last 30 days')">ROAS by channel</button>
+    <button class="chip" onclick="quick('ROAS by channel last 30 days')">ROAS</button>
     <button class="chip" onclick="quick('Show spend trend over last 30 days')">Spend trend</button>
-    <button class="chip" onclick="quick('Top platforms by spend')">Top platforms</button>
+    <button class="chip" onclick="quick('Top platforms by spend')">Platforms</button>
     <button class="chip" onclick="quick('Which campaign has the best conversion rate?')">Best conversion</button>
   </div>
 
-  <div class="result-area" id="results">
+  <div id="results">
     <div class="panel">
-      <div class="panel-body">Ask a question above to get started ↑</div>
+      <div class="panel-body">Ask something to begin ↑</div>
     </div>
   </div>
 
@@ -144,7 +141,7 @@ button {
     function setLoading(on) {
       const btn = document.getElementById("sendBtn");
       btn.disabled = on;
-      btn.textContent = on ? "Thinking..." : "Send";
+      btn.innerText = on ? "Thinking..." : "Send";
 
       if (on) {
         document.getElementById("results").innerHTML = `
@@ -152,6 +149,20 @@ button {
             <div class="loading">Querying your data...</div>
           </div>`;
       }
+    }
+
+    function formatInsights(text) {
+      if (!text) return "No response";
+
+      let formatted = text
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^- (.*$)/gim, '<li>$1</li>');
+
+      if (formatted.includes("<li>")) {
+        formatted = formatted.replace(/(<li>.*<\/li>)/gims, '<ul>$1</ul>');
+      }
+
+      return formatted;
     }
 
     async function send() {
@@ -176,7 +187,7 @@ button {
         document.getElementById("results").innerHTML = `
           <div class="panel">
             <div class="panel-header">Answer</div>
-            <div class="panel-body">${d.insights || "No response"}</div>
+            <div class="panel-body">${formatInsights(d.insights)}</div>
           </div>`;
 
       } catch (err) {
@@ -184,23 +195,23 @@ button {
           <div class="panel">
             <div class="panel-header">Connection Error</div>
             <div class="panel-body error-body">
-Could not reach backend server
-
-Make sure BOTH are running:
-1. node server.js
-2. ngrok http 3000
-
-Backend:
-https://procreate-squint-thwarting.ngrok-free.dev
+Backend not reachable
 
 Error: ${err.message}
             </div>
           </div>`;
-      } finally {
-        setLoading(false);
       }
+
+      setLoading(false);
     }
   </script>
 
 </body>
 </html>
+"""
+
+file_path = "/mnt/data/ai_analytics_chatbot.html"
+with open(file_path, "w") as f:
+    f.write(html_content)
+
+file_path
