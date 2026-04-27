@@ -56,6 +56,24 @@ button {
 }
 .primary { background: #22c55e; color: #000; }
 
+/* ✅ BUTTONS STYLE */
+.chips {
+  margin-bottom: 20px;
+}
+.chip {
+  background: #1f2937;
+  color: #d1d5db;
+  border: 1px solid #374151;
+  padding: 6px 12px;
+  font-size: 12px;
+  margin: 4px 6px 4px 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.chip:hover {
+  background: #374151;
+}
+
 .result-area { display: flex; flex-direction: column; gap: 16px; }
 
 .panel {
@@ -83,6 +101,7 @@ button {
 
   </style>
 </head>
+
 <body>
 
   <div class="header">
@@ -98,6 +117,16 @@ button {
     <button class="primary" id="sendBtn" onclick="send()">Send</button>
   </div>
 
+  <!-- ✅ QUICK QUERY BUTTONS -->
+
+  <div class="chips">
+    <button class="chip" onclick="quick('Top channels by spend last 7 days')">Top channels</button>
+    <button class="chip" onclick="quick('ROAS by channel last 30 days')">ROAS by channel</button>
+    <button class="chip" onclick="quick('Show spend trend over last 30 days')">Spend trend</button>
+    <button class="chip" onclick="quick('Top platforms by spend')">Top platforms</button>
+    <button class="chip" onclick="quick('Which campaign has the best conversion rate?')">Best conversion</button>
+  </div>
+
   <div class="result-area" id="results">
     <div class="panel">
       <div class="panel-body">Ask a question above to get started ↑</div>
@@ -106,6 +135,11 @@ button {
 
   <script>
     let conversationId = null;
+
+    function quick(text) {
+      document.getElementById("q").value = text;
+      send();
+    }
 
     function setLoading(on) {
       const btn = document.getElementById("sendBtn");
