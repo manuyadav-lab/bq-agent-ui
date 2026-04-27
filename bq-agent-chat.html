@@ -1,4 +1,5 @@
-# Fix button text visibility by setting color
+# Create updated Tableau-safe HTML (no HTML tags in insights)
+
 html = """<!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +35,7 @@ button {
   border-radius:20px;
   cursor:pointer;
   font-size:12px;
-  color:#111;   /* FIX */
+  color:#111;
 }
 
 .chip:hover {
@@ -47,7 +48,7 @@ button {
 .kpi-value { font-size:18px; font-weight:bold; }
 
 .panel { background:white; border-radius:8px; border:1px solid #eee; margin-top:16px; }
-.panel-body { padding:14px; line-height:1.6; }
+.panel-body { padding:14px; line-height:1.6; white-space:pre-wrap; }
 
 .loading { padding:14px; color:#999; }
 </style>
@@ -85,17 +86,21 @@ button {
 </div>
 
 <script>
+
 function quick(text){
  document.getElementById("q").value=text;
  send();
 }
 
+/* TABLEAU SAFE FORMAT */
 function format(text){
  if(!text) return "";
- text=text.replace(/###/g,"");
- text=text.replace(/\\*\\*(.*?)\\*\\*/g,"<b>$1</b>");
- text=text.replace(/\\*/g,"•");
- text=text.replace(/\\n/g,"<br>");
+
+ text = text.replace(/###/g,"");
+ text = text.replace(/\\*\\*/g,"");  // remove bold markdown
+ text = text.replace(/\\*/g,"•");   // bullets
+ text = text.replace(/\\n/g,"\\n\\n"); // spacing
+
  return text;
 }
 
@@ -138,16 +143,16 @@ async function send(){
 
  renderDefaultKPIs(d.data);
 
- document.getElementById("results").innerHTML =
- '<div class="panel"><div class="panel-body">'+format(d.insights)+'</div></div>';
+ document.getElementById("results").innerText = format(d.insights); // IMPORTANT change
 }
+
 </script>
 
 </body>
 </html>
 """
 
-path = "/mnt/data/analytics_copilot_buttons_fixed.html"
+path = "/mnt/data/tableau_safe_copilot.html"
 with open(path, "w") as f:
     f.write(html)
 
