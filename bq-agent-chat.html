@@ -1,5 +1,4 @@
-# Create downloadable improved HTML with markdown formatting fix
-html = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -75,7 +74,7 @@ function format(text){
 if(!text) return "No response";
 
 // bold
-text=text.replace(/\\*\\*(.*?)\\*\\*/g,'<b>$1</b>');
+text=text.replace(/\*\*(.*?)\*\*/g,'<b>$1</b>');
 // bullets
 text=text.replace(/^- (.*)$/gm,'<li>$1</li>');
 
@@ -118,10 +117,3 @@ setLoading(false);
 
 </body>
 </html>
-"""
-
-path = "/mnt/data/ai_chatbot_final.html"
-with open(path, "w") as f:
-    f.write(html)
-
-path
