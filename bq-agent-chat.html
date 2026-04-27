@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
   <meta charset="UTF-8">
@@ -12,325 +13,145 @@
       padding: 24px;
     }
 
-    /* HEADER */
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-    .logo {
-      width: 38px; height: 38px;
-      background: #22c55e;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: bold; color: black; font-size: 14px;
-    }
-    .title { font-size: 20px; font-weight: 600; }
-    .subtitle { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+```
+.header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.logo {
+  width: 38px; height: 38px;
+  background: #22c55e;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: bold; color: black;
+}
 
-    /* INPUT ROW */
-    .input-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    input {
-      flex: 1;
-      padding: 10px 14px;
-      border-radius: 6px;
-      border: 1px solid #374151;
-      background: #1f2937;
-      color: #fff;
-      font-size: 14px;
-    }
-    input:focus { outline: none; border-color: #22c55e; }
-    input::placeholder { color: #6b7280; }
+.input-row { display: flex; gap: 8px; margin-bottom: 16px; }
 
-    button {
-      padding: 10px 18px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-    }
-    .primary { background: #22c55e; color: #000; }
-    .primary:hover { background: #16a34a; }
-    .primary:disabled { background: #166534; color: #4ade80; cursor: not-allowed; }
-    .chip {
-      background: #1f2937;
-      color: #d1d5db;
-      border: 1px solid #374151;
-      padding: 6px 12px;
-      font-size: 12px;
-      margin: 4px 4px 4px 0;
-    }
-    .chip:hover { background: #374151; }
+input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #374151;
+  background: #1f2937;
+  color: #fff;
+}
 
-    /* QUICK QUERIES */
-    .quick-label {
-      font-size: 12px;
-      color: #6b7280;
-      margin-bottom: 8px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .chips { margin-bottom: 24px; }
+button {
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
 
-    /* RESULT PANELS */
-    .result-area { display: flex; flex-direction: column; gap: 16px; }
+.primary { background: #22c55e; color: #000; }
 
-    .panel {
-      background: #111827;
-      border-radius: 8px;
-      border: 1px solid #1f2937;
-      overflow: hidden;
-    }
-    .panel-header {
-      background: #1f2937;
-      padding: 8px 14px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #9ca3af;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .panel-body {
-      padding: 14px;
-      font-size: 13px;
-      line-height: 1.7;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    .sql-body {
-      font-family: 'Courier New', monospace;
-      font-size: 12px;
-      color: #86efac;
-      line-height: 1.6;
-    }
-    .error-body { color: #f87171; }
+.panel {
+  background: #111827;
+  border-radius: 8px;
+  border: 1px solid #1f2937;
+  margin-top: 16px;
+}
 
-    /* DATA TABLE */
-    .table-wrap { overflow-x: auto; padding: 14px; }
-    table { border-collapse: collapse; width: 100%; font-size: 12px; }
-    th {
-      background: #1f2937;
-      padding: 8px 12px;
-      text-align: left;
-      color: #9ca3af;
-      font-weight: 600;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      border-bottom: 1px solid #374151;
-    }
-    td {
-      padding: 7px 12px;
-      border-bottom: 1px solid #1f2937;
-      color: #e5e7eb;
-    }
-    tr:last-child td { border-bottom: none; }
-    tr:hover td { background: #1f2937; }
+.panel-header {
+  background: #1f2937;
+  padding: 8px 14px;
+  font-size: 11px;
+  color: #9ca3af;
+}
 
-    /* SUGGESTIONS */
-    .suggestions { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 14px; }
-    .sugg-btn {
-      background: #1f2937;
-      border: 1px solid #374151;
-      color: #93c5fd;
-      padding: 5px 10px;
-      border-radius: 4px;
-      font-size: 11px;
-      cursor: pointer;
-    }
-    .sugg-btn:hover { background: #374151; }
+.panel-body {
+  padding: 14px;
+  font-size: 13px;
+  white-space: pre-wrap;
+}
 
-    /* LOADING */
-    .loading { color: #6b7280; font-style: italic; padding: 14px; font-size: 13px; }
-    .dot-anim::after {
-      content: '';
-      animation: dots 1.2s steps(4, end) infinite;
-    }
-    @keyframes dots {
-      0%   { content: ''; }
-      25%  { content: '.'; }
-      50%  { content: '..'; }
-      75%  { content: '...'; }
-    }
+.error-body { color: #f87171; }
+```
 
-    /* PLACEHOLDER */
-    .placeholder {
-      color: #374151;
-      font-size: 13px;
-      padding: 30px 14px;
-      text-align: center;
-    }
   </style>
 </head>
+
 <body>
 
-  <div class="header">
-    <div class="logo">AI</div>
-    <div>
-      <div class="title">AI Analytics ChatBot</div>
-      <div class="subtitle">BigQuery | Conversational Analytics API</div>
-    </div>
+<div class="header">
+  <div class="logo">AI</div>
+  <div>
+    <div>AI Analytics ChatBot</div>
+    <div style="font-size:12px;color:#9ca3af;">BigQuery | Conversational Analytics</div>
   </div>
+</div>
 
-  <div class="input-row">
-    <input id="q" placeholder="Ask anything about your data..." onkeydown="if(event.key==='Enter') send()" />
-    <button class="primary" id="sendBtn" onclick="send()">Send</button>
+<div class="input-row">
+  <input id="q" placeholder="Ask anything..." onkeydown="if(event.key==='Enter') send()" />
+  <button class="primary" onclick="send()" id="sendBtn">Send</button>
+</div>
+
+<div id="results">
+  <div class="panel">
+    <div class="panel-body">Ask a question ↑</div>
   </div>
+</div>
 
-  <div class="quick-label">Quick Queries</div>
-  <div class="chips">
-    <button class="chip" onclick="quick('Top channels by spend last 7 days')">Top channels last 7 days</button>
-    <button class="chip" onclick="quick('ROAS by channel last 30 days')">ROAS by channel</button>
-    <button class="chip" onclick="quick('Show spend trend over last 30 days')">Spend trend</button>
-    <button class="chip" onclick="quick('Top platforms by spend')">Top platforms by spend</button>
-    <button class="chip" onclick="quick('Which campaign has the best conversion rate?')">Best conversion rate</button>
-  </div>
+<script>
+let conversationId = null;
 
-  <div class="result-area" id="results">
-    <div class="panel">
-      <div class="placeholder">Ask a question above to get started ↑</div>
-    </div>
-  </div>
+function setLoading(on){
+  const btn = document.getElementById("sendBtn");
+  btn.disabled = on;
+  btn.innerText = on ? "Thinking..." : "Send";
+}
 
-  <script>
-    // Track conversation ID for multi-turn context
-    let conversationId = null;
+async function send(){
+  const q = document.getElementById("q").value.trim();
+  if(!q) return;
 
-    function quick(text) {
-      document.getElementById("q").value = text;
-      send();
-    }
+  setLoading(true);
 
-    function setLoading(on) {
-      const btn = document.getElementById("sendBtn");
-      const input = document.getElementById("q");
-      btn.disabled = on;
-      btn.textContent = on ? "Thinking..." : "Send";
-      input.disabled = on;
+  try{
+    const body = { message: q };
+    if(conversationId) body.conversationId = conversationId;
 
-      if (on) {
-        document.getElementById("results").innerHTML = `
-          <div class="panel">
-            <div class="loading dot-anim">Querying your data</div>
-          </div>`;
-      }
-    }
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
 
-    function renderTable(data) {
-      if (!data || data.length === 0) return "<em style='color:#6b7280'>No rows returned</em>";
-      const cols = Object.keys(data[0]);
-      const rows = data.map(row =>
-        `<tr>${cols.map(c => `<td>${row[c] ?? ""}</td>`).join("")}</tr>`
-      ).join("");
-      return `
-        <div class="table-wrap">
-          <table>
-            <thead><tr>${cols.map(c => `<th>${c}</th>`).join("")}</tr></thead>
-            <tbody>${rows}</tbody>
-          </table>
-        </div>`;
-    }
+    const res = await fetch("https://procreate-squint-thwarting.ngrok-free.app/chat", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(body),
+      signal: controller.signal
+    });
 
-    function renderSuggestions(suggestions) {
-      if (!suggestions || suggestions.length === 0) return "";
-      const btns = suggestions.map(s =>
-        `<button class="sugg-btn" onclick="quick('${s.replace(/'/g,"\\'")}')">➜ ${s}</button>`
-      ).join("");
-      return `
-        <div class="panel">
-          <div class="panel-header">💡 Suggested Follow-ups</div>
-          <div class="suggestions">${btns}</div>
-        </div>`;
-    }
+    clearTimeout(timeout);
 
-    async function send() {
-      const q = document.getElementById("q").value.trim();
-      if (!q) return;
+    const d = await res.json();
+    if(d.conversationId) conversationId = d.conversationId;
 
-      setLoading(true);
+    document.getElementById("results").innerHTML = `
+      <div class="panel">
+        <div class="panel-header">Answer</div>
+        <div class="panel-body">${d.insights || "No response"}</div>
+      </div>`;
 
-      try {
-        const body = { message: q };
-        if (conversationId) body.conversationId = conversationId;
+  } catch(err){
+    document.getElementById("results").innerHTML = `
+      <div class="panel">
+        <div class="panel-header">Connection Error</div>
+        <div class="panel-body error-body">
+Could not reach backend server
 
-        const res = await fetch("https://procreate-squint-thwarting.ngrok-free.app/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body)
-        });
+Make sure BOTH are running:
+1. node server.js
+2. ngrok http 3000
 
-        const d = await res.json();
+Backend:
+https://procreate-squint-thwarting.ngrok-free.app
 
-        // Store conversation ID for multi-turn follow-ups
-        if (d.conversationId) conversationId = d.conversationId;
+Error: ${err.message}
+        </div>
+      </div>`;
+  }
 
-        if (d.error) {
-          document.getElementById("results").innerHTML = `
-            <div class="panel">
-              <div class="panel-header">⚠ Error</div>
-              <div class="panel-body error-body">${d.error}\n\n${d.hint || ""}</div>
-            </div>`;
-          return;
-        }
-
-        let html = "";
-
-        // INSIGHTS panel
-        if (d.insights) {
-          html += `
-            <div class="panel">
-              <div class="panel-header">🤖 Answer</div>
-              <div class="panel-body">${d.insights}</div>
-            </div>`;
-        }
-
-        // DATA TABLE panel
-        if (d.data && d.data.length > 0) {
-          html += `
-            <div class="panel">
-              <div class="panel-header">📊 Data (${d.data.length} rows)</div>
-              ${renderTable(d.data)}
-            </div>`;
-        }
-
-        // SQL panel
-        if (d.sql) {
-          html += `
-            <div class="panel">
-              <div class="panel-header">🔍 Generated SQL</div>
-              <div class="panel-body sql-body">${d.sql}</div>
-            </div>`;
-        }
-
-        // SUGGESTIONS panel
-        html += renderSuggestions(d.suggestions);
-
-        document.getElementById("results").innerHTML = html || `
-          <div class="panel">
-            <div class="panel-body" style="color:#6b7280">No response received. Try rephrasing your question.</div>
-          </div>`;
-
-      } catch (err) {
-        document.getElementById("results").innerHTML = `
-          <div class="panel">
-            <div class="panel-header">⚠ Connection Error</div>
-            <div class="panel-body error-body">Could not reach server at localhost:3000\n\nMake sure server.js is running:\n  node server.js\n\nError: ${err.message}</div>
-          </div>`;
-      } finally {
-        setLoading(false);
-      }
-    }
-  </script>
+  setLoading(false);
+}
+</script>
 
 </body>
 </html>
