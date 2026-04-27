@@ -1,6 +1,4 @@
-# Create updated Tableau-safe HTML (no HTML tags in insights)
-
-html = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -97,9 +95,9 @@ function format(text){
  if(!text) return "";
 
  text = text.replace(/###/g,"");
- text = text.replace(/\\*\\*/g,"");  // remove bold markdown
- text = text.replace(/\\*/g,"•");   // bullets
- text = text.replace(/\\n/g,"\\n\\n"); // spacing
+ text = text.replace(/\*\*/g,"");  // remove bold markdown
+ text = text.replace(/\*/g,"•");   // bullets
+ text = text.replace(/\n/g,"\n\n"); // spacing
 
  return text;
 }
@@ -150,10 +148,3 @@ async function send(){
 
 </body>
 </html>
-"""
-
-path = "/mnt/data/tableau_safe_copilot.html"
-with open(path, "w") as f:
-    f.write(html)
-
-path
