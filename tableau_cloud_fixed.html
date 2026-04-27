@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Marketing Analytics Copilot</title>
+
+<style>
+body { font-family: Inter, Arial; background:#f5f7fb; padding:24px; color:#111; }
+
+.header { margin-bottom:20px; }
+.title { font-size:20px; font-weight:600; }
+.subtitle { font-size:12px; color:#666; }
+
+.input-row { display:flex; gap:8px; margin-bottom:16px; }
+input { flex:1; padding:10px; border-radius:6px; border:1px solid #ddd; }
+
+button {
+  padding:10px 16px;
+  border:none;
+  border-radius:6px;
+  background:#4285f4;
+  color:white;
+  cursor:pointer;
+}
+
+.chips { margin-bottom:16px; }
+
+.chip {
+  background:#ffffff;
+  border:1px solid #ddd;
+  padding:6px 12px;
+  margin:4px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:12px;
+  color:#111;
+}
+
+.chip:hover { background:#f0f0f0; }
+
+.kpi-container { display:flex; gap:12px; margin-top:16px; flex-wrap:wrap; }
+.kpi { background:white; padding:12px; border-radius:8px; border:1px solid #eee; min-width:160px; }
+.kpi-title { font-size:12px; color:#666; }
+.kpi-value { font-size:18px; font-weight:bold; }
+
+.panel { background:white; border-radius:8px; border:1px solid #eee; margin-top:16px; }
+.panel-body { padding:14px; line-height:1.6; white-space:pre-wrap; }
+
+.loading { padding:14px; color:#999; }
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="title">Marketing Analytics Copilot</div>
+  <div class="subtitle">AI powered insights</div>
+</div>
+
+<div class="input-row">
+  <input id="q" placeholder="Ask anything..." onkeydown="if(event.key==='Enter') send()">
+  <button onclick="send()">Send</button>
+</div>
+
+<div class="chips">
+  <button class="chip" onclick="quick('Top channels by spend last 7 days')">Top Channels</button>
+  <button class="chip" onclick="quick('ROAS by channel last 30 days')">ROAS by Channel</button>
+  <button class="chip" onclick="quick('Spend trend last 30 days')">Spend Trend</button>
+  <button class="chip" onclick="quick('Top campaigns by conversions')">Top Campaigns</button>
+  <button class="chip" onclick="quick('Best performing platform by ROAS')">Best Platform</button>
+</div>
+
+<div class="kpi-container" id="kpis"></div>
+
+<div id="results">
+  <div class="panel"><div class="panel-body">Ask something ↑</div></div>
+</div>
+
+<script>
+
+function quick(text){
+ document.getElementById("q").value=text;
+ send();
+}
+
+/* 🔥 KEY FIX: decode escaped HTML */
+function decodeHTML(str){
+ let txt = document.createElement("textarea");
+ txt.innerHTML = str;
+ return txt.value;
+}
+
+/* CLEAN FORMAT */
+function format(text){
+ if(!text) return "";
+
+ text = decodeHTML(text);   // FIX for Tableau cloud
+ text = text.replace(/###/g,"");
+ text = text.replace(/\*\*/g,"");
+ text = text.replace(/\*/g,"•");
+ text = text.replace(/\n/g,"\n\n");
+
+ return text;
+}
+
+function renderKPIs(data){
+ if(!data || data.length===0) return;
+
+ let totalSpend=0, totalRevenue=0, conversions=0;
+
+ data.forEach(r=>{
+   totalSpend += Number(r.spend||0);
+   totalRevenue += Number(r.revenue||0);
+   conversions += Number(r.conversions||0);
+ });
+
+ let roas = totalRevenue && totalSpend ? (totalRevenue/totalSpend).toFixed(2) : "-";
+ let cpa = conversions ? (totalSpend/conversions).toFixed(2) : "-";
+
+ document.getElementById("kpis").innerHTML = `
+   <div class="kpi"><div class="kpi-title">Total Spend</div><div class="kpi-value">$${totalSpend.toLocaleString()}</div></div>
+   <div class="kpi"><div class="kpi-title">Revenue</div><div class="kpi-value">$${totalRevenue.toLocaleString()}</div></div>
+   <div class="kpi"><div class="kpi-title">ROAS</div><div class="kpi-value">${roas}x</div></div>
+   <div class="kpi"><div class="kpi-title">CPA</div><div class="kpi-value">$${cpa}</div></div>
+ `;
+}
+
+async function send(){
+ let q=document.getElementById("q").value;
+ if(!q) return;
+
+ document.getElementById("results").innerHTML =
+ '<div class="panel"><div class="loading">Thinking...</div></div>';
+
+ let res = await fetch("https://procreate-squint-thwarting.ngrok-free.dev/chat",{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({message:q})
+ });
+
+ let d = await res.json();
+
+ renderKPIs(d.data);
+
+ document.getElementById("results").innerHTML =
+ '<div class="panel"><div class="panel-body">'+format(d.insights)+'</div></div>';
+}
+
+</script>
+
+</body>
+</html>
