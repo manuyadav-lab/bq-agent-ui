@@ -36,9 +36,7 @@ button {
   color:#111;
 }
 
-.chip:hover {
-  background:#f0f0f0;
-}
+.chip:hover { background:#f0f0f0; }
 
 .kpi-container { display:flex; gap:12px; margin-top:16px; flex-wrap:wrap; }
 .kpi { background:white; padding:12px; border-radius:8px; border:1px solid #eee; min-width:160px; }
@@ -70,11 +68,6 @@ button {
   <button class="chip" onclick="quick('Spend trend last 30 days')">Spend Trend</button>
   <button class="chip" onclick="quick('Top campaigns by conversions')">Top Campaigns</button>
   <button class="chip" onclick="quick('Best performing platform by ROAS')">Best Platform</button>
-  <button class="chip" onclick="quick('CPA by channel last 30 days')">CPA by Channel</button>
-  <button class="chip" onclick="quick('Conversion rate by campaign')">CVR by Campaign</button>
-  <button class="chip" onclick="quick('Revenue trend last 30 days')">Revenue Trend</button>
-  <button class="chip" onclick="quick('Top 5 channels by impressions')">Top Impressions</button>
-  <button class="chip" onclick="quick('Spend vs revenue by platform')">Spend vs Revenue</button>
 </div>
 
 <div class="kpi-container" id="kpis"></div>
@@ -90,19 +83,27 @@ function quick(text){
  send();
 }
 
-/* TABLEAU SAFE FORMAT */
+/* 🔥 KEY FIX: decode escaped HTML */
+function decodeHTML(str){
+ let txt = document.createElement("textarea");
+ txt.innerHTML = str;
+ return txt.value;
+}
+
+/* CLEAN FORMAT */
 function format(text){
  if(!text) return "";
 
+ text = decodeHTML(text);   // FIX for Tableau cloud
  text = text.replace(/###/g,"");
- text = text.replace(/\*\*/g,"");  // remove bold markdown
- text = text.replace(/\*/g,"•");   // bullets
- text = text.replace(/\n/g,"\n\n"); // spacing
+ text = text.replace(/\*\*/g,"");
+ text = text.replace(/\*/g,"•");
+ text = text.replace(/\n/g,"\n\n");
 
  return text;
 }
 
-function renderDefaultKPIs(data){
+function renderKPIs(data){
  if(!data || data.length===0) return;
 
  let totalSpend=0, totalRevenue=0, conversions=0;
@@ -139,9 +140,10 @@ async function send(){
 
  let d = await res.json();
 
- renderDefaultKPIs(d.data);
+ renderKPIs(d.data);
 
- document.getElementById("results").innerText = format(d.insights); // IMPORTANT change
+ document.getElementById("results").innerHTML =
+ '<div class="panel"><div class="panel-body">'+format(d.insights)+'</div></div>';
 }
 
 </script>
